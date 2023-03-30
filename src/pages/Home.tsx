@@ -56,7 +56,7 @@ function Home() {
         return <TodoBox key={item.id} item={item} />;
       })}
       {/* 게시글 작성 페이지로 이동 */}
-      <Create onClick={createPost}>+</Create>
+      <Create onClick={createPost}>추가</Create>
     </Wrap>
   );
 }
@@ -64,13 +64,31 @@ function Home() {
 export default Home;
 const Wrap = styled.div`
   width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
+  @media only screen and (max-width: 1000px) {
+    width: 600px;
+  }
+  @media only screen and (max-width: 667px) {
+    width: 500px;
+  }
+  @media only screen and (max-width: 580px) {
+    width: 450px;
+  }
+  @media only screen and (max-width: 480px) {
+    width: 390px;
+  }
+  @media only screen and (max-width: 414px) {
+    width: 300px;
+  }
 `;
 const TitleH2 = styled.h2`
   font-size: 40px;
   text-align: center;
   margin-top: 40px;
   font-weight: 400;
+  @media only screen and (max-width: 480px) {
+    font-size: 30px;
+  }
 `;
 const NameP = styled.p`
   font-size: 16px;
@@ -83,12 +101,21 @@ const Category = styled.div<{ list: string }>`
   ul {
     display: flex;
     font-weight: 500;
+    @media only screen and (max-width: 1000px) {
+      justify-content: center;
+    }
   }
   ul li {
     margin-right: 20px;
     padding-bottom: 3px;
     text-align: center;
     cursor: pointer;
+    @media only screen and (max-width: 1000px) {
+      margin-left: 20px;
+    }
+    @media only screen and (max-width: 414px) {
+      margin: 0 10px;
+    }
   }
   ul li:nth-child(1) {
     border-bottom: ${(props) =>
@@ -107,6 +134,7 @@ const Category = styled.div<{ list: string }>`
   }
 `;
 const Create = styled.p`
+  text-align: center;
   position: fixed;
   width: 50px;
   height: 50px;
@@ -114,14 +142,26 @@ const Create = styled.p`
   border-radius: 50%;
   box-shadow: 1px 3px 5px 0px #ccc;
   line-height: 50px;
-  text-align: center;
-  font-size: 40px;
-  font-weight: 100;
+  font-size: 16px;
+  font-weight: 400;
   right: 20%;
   bottom: 50px;
   cursor: pointer;
   transition: 0.5s ease;
   &:hover {
     background-color: #ccc;
+  }
+  @media only screen and (max-width: 1550px) {
+    right: 15%;
+  }
+  @media only screen and (max-width: 1400px) {
+    right: 10%;
+  }
+  @media only screen and (max-width: 1400px) {
+    right: 50%;
+    transform: translateX(50%);
+    background-color: #ccc;
+    color: #fff;
+    box-shadow: none;
   }
 `;

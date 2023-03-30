@@ -33,10 +33,6 @@ function Post() {
       },
     }
   );
-  // Form
-  const CreateFormOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
   // 제목 onChange
   const TitleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -55,9 +51,6 @@ function Post() {
     const year = newDate.getFullYear();
     const month = newDate.getMonth() + 1;
     const day = newDate.getDate();
-    // const Hour = newDate.getHours();
-    // const Minute = newDate.getMinutes();
-    // // const date = `${year}/${month}/${day} ${Hour}:${Minute}`;
     const date = `${year}.${month}.${day}`;
 
     const newPost: Todos = {
@@ -77,25 +70,23 @@ function Post() {
   return (
     <Wrap>
       <PageTitle>CREATE TEXT</PageTitle>
-      <CreateForm onSubmit={CreateFormOnSubmit}>
-        <TextTitle>제목</TextTitle>
-        <TitleInput
-          onChange={TitleOnChange}
-          maxLength={30}
-          placeholder="제목을 입력하세요."
-        />
-        <TextTitle>내용</TextTitle>
-        <TextTextarea
-          onChange={TextOnChange}
-          maxLength={1000}
-          placeholder="내용을 입력하세요."
-        />
+      <TextTitle>제목</TextTitle>
+      <TitleInput
+        onChange={TitleOnChange}
+        maxLength={30}
+        placeholder="제목을 입력하세요."
+      />
+      <TextTitle>내용</TextTitle>
+      <TextTextarea
+        onChange={TextOnChange}
+        maxLength={1000}
+        placeholder="내용을 입력하세요."
+      />
 
-        <ButtonDiv>
-          <Cancel onClick={CancelOnClick}>취소</Cancel>
-          <Create onClick={CreateOnClick}>완료</Create>
-        </ButtonDiv>
-      </CreateForm>
+      <ButtonDiv>
+        <Cancel onClick={CancelOnClick}>취소</Cancel>
+        <Create onClick={CreateOnClick}>완료</Create>
+      </ButtonDiv>
     </Wrap>
   );
 }
@@ -104,16 +95,27 @@ export default Post;
 const Wrap = styled.div`
   width: 70%;
   margin: 0 auto;
+  @media only screen and (max-width: 1000px) {
+    width: 80%;
+  }
+  @media only screen and (max-width: 830px) {
+    width: 90%;
+  }
 `;
 const PageTitle = styled.h2`
   margin: 40px 0 30px 0;
   font-size: 40px;
   text-align: center;
+  @media only screen and (max-width: 667px) {
+    font-size: 30px;
+  }
 `;
-const CreateForm = styled.form``;
 const TextTitle = styled.h3`
   font-size: 20px;
   margin: 20px 0 10px 10px;
+  @media only screen and (max-width: 667px) {
+    font-size: 16px;
+  }
 `;
 const TitleInput = styled.input`
   width: 100%;

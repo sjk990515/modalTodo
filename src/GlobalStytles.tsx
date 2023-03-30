@@ -4,6 +4,7 @@ import reset from "styled-reset";
 const GlobalStyles = createGlobalStyle` 
   ${reset}
   body{
+    overflow:overlay;
     background-color: #F8F4EF;
     font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
   }

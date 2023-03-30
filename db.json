@@ -1,23 +1,16 @@
 {
   "todo": [
     {
-      "id": "ca355276-c858-4cec-abcf-f71f704774aa",
-      "title": "aaa",
-      "text": "ㅁㅁㅁ",
-      "date": "2023.3.30",
-      "done": false
-    },
-    {
       "id": "d73b9fd4-13dc-4ed2-84d0-8cbdad326b2b",
-      "title": "aaa",
-      "text": "aaaaaadfas",
+      "title": "모달의 오른쪽 위 Done 버튼을 누르면 완료 상태가 됩니다!",
+      "text": "모달의 오른쪽 위 Done 버튼을 누르면 완료 상태가 됩니다!",
       "date": "2023.3.30",
       "done": false
     },
     {
       "id": "d73b9fd4-13dc-4ed2-84d0-8cbdad32asd6b2b",
-      "title": "donedone",
-      "text": "aaaaaadfas",
+      "title": "수정도 가능합니다!",
+      "text": "수정도 가능합니다!",
       "date": "2023.3.30",
       "done": false
     },
@@ -26,6 +19,34 @@
       "title": "안녕하세요 신정근 입니다.",
       "text": "안녕하세요 더미데이터 입니다.",
       "date": "2023.3.30",
+      "done": false
+    },
+    {
+      "id": "9efe4acd-b052-4f11-81eb-a596dfa4c0c1",
+      "title": "데스크탑에서는 오른쪽 밑 모바일에선 중앙의 추가를누르면",
+      "text": "게시글 작성이 가능합니다!",
+      "date": "2023.3.31",
+      "done": false
+    },
+    {
+      "id": "052e0522-26a5-48ec-af31-a25f9341f0fa",
+      "title": "반응형으로 태블릿, 모바일에서도 볼 수 있습니다.",
+      "text": "반응형으로 태블릿, 모바일에서도 볼 수 있습니다.",
+      "date": "2023.3.31",
+      "done": true
+    },
+    {
+      "id": "e20e97ec-4cf6-4ef8-9e55-5f7f85b8754c",
+      "title": "카테고리에서 할 일, 완료한 일 선택할 수 있습니다",
+      "text": "카테고리에서 할 일, 완료한 일 선택할 수 있습니다",
+      "date": "2023.3.31",
+      "done": false
+    },
+    {
+      "id": "7833fd67-d638-42b5-9ba8-c7c6a320df2e",
+      "title": "완료된 목록",
+      "text": "완료된 목록",
+      "date": "2023.3.31",
       "done": true
     }
   ]
