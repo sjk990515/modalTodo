@@ -22,10 +22,24 @@ function TodoBox(props: { item: Todos }) {
       axios.put(`http://localhost:3001/todo/${newData.id}`, newData),
     {
       onSuccess: () => {
-        queryClient.refetchQueries("todo");
+        queryClient.invalidateQueries("todo");
       },
     }
   );
+  // 삭제
+  const DeleteMutation = useMutation(
+    (id: string) => axios.delete(`http://localhost:3001/todo/${id}`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("todo");
+      },
+    }
+  );
+  const DeleteOnClick = (id: string) => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      DeleteMutation.mutate(id);
+    }
+  };
   // Done 온 오프
   const DoneOnClick = () => {
     const newData = {
@@ -53,19 +67,25 @@ function TodoBox(props: { item: Todos }) {
             onClick={ModalBackgroundOnClick}
             modal={modal}
           ></ModalBackground>
-          <Modal modal={modal}>
+          <Modal modal={modal} done={props.item.done}>
             <ModalDiv>
-              <ModalTitle>{props.item.title}</ModalTitle>
+              {/* 제목*/}
+              <ModalTitle done={props.item.done}>{props.item.title}</ModalTitle>
+              {/* 완료 버튼*/}
               <DoneText>Done</DoneText>
               <DoneButton onClick={DoneOnClick}>
                 <Done done={props.item.done} />
               </DoneButton>
             </ModalDiv>
+            {/*내용*/}
             <ModalText>{props.item.text}</ModalText>
             <ModalButton>
+              {/*날짜*/}
               <ModalDate>{props.item.date}</ModalDate>
               <ModalEdit>수정</ModalEdit>
-              <ModalDelete>삭제</ModalDelete>
+              <ModalDelete onClick={() => DeleteOnClick(props.item.id)}>
+                삭제
+              </ModalDelete>
             </ModalButton>
           </Modal>
         </>
@@ -112,7 +132,7 @@ const ModalBackground = styled.div<{ modal: Boolean }>`
   opacity: 0.5;
   z-index: 999;
 `;
-const Modal = styled.div<{ modal: Boolean }>`
+const Modal = styled.div<{ modal: Boolean; done: Boolean }>`
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -120,7 +140,7 @@ const Modal = styled.div<{ modal: Boolean }>`
   height: ${(props) => (props.modal ? "75%" : "0")};
   opacity: ${(props) => (props.modal ? "1" : "0")};
   padding: ${(props) => (props.modal ? "30px" : "")};
-  background-color: #fff;
+  background-color: ${(props) => (props.done ? "#727272" : "#fff")};
   border-radius: 10px;
   transition: 0.5s;
   top: 50%;
@@ -135,7 +155,8 @@ const ModalDiv = styled.div`
   padding-bottom: 15px;
   margin-bottom: 15px;
 `;
-const ModalTitle = styled.div`
+const ModalTitle = styled.div<{ done: Boolean }>`
+  text-decoration: ${(props) => (props.done ? "line-through" : "")};
   font-size: 28px;
   letter-spacing: -1px;
   word-break: break-all;
@@ -159,7 +180,7 @@ const Done = styled.div<{ done: Boolean }>`
   margin-left: ${(props) => (props.done ? "20px" : "0")};
   width: 25px;
   height: 25px;
-  background-color: #000;
+  background-color: ${(props) => (props.done ? "#000" : "#727272")};
   border-radius: 50%;
 `;
 const ModalText = styled.div`
