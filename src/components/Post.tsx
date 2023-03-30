@@ -11,6 +11,7 @@ export interface Todos {
   title: string;
   text: string;
   date: string;
+  done: boolean;
 }
 
 function Post() {
@@ -64,6 +65,7 @@ function Post() {
       title,
       text,
       date,
+      done: false,
     };
     // 제목, 내용 빈칸 예외처리
     if (title.trim() === "" || text.trim() === "") {
@@ -79,7 +81,7 @@ function Post() {
         <TextTitle>제목</TextTitle>
         <TitleInput
           onChange={TitleOnChange}
-          maxLength={50}
+          maxLength={30}
           placeholder="제목을 입력하세요."
         />
         <TextTitle>내용</TextTitle>
