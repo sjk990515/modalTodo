@@ -1,29 +1,77 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 
 function Post() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
+  // 제목 state
+  const [title, setTitle] = useState<string>("");
+  // 내용 state
+  const [text, setText] = useState<string>("");
+  // post
+  const postMutation = useMutation(
+    (newPost) => axios.post("http://localhost:3001/todo", newPost),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("todo");
+        alert("작성이 완료되었습니다.");
+        navigate("/");
+      },
+    }
+  );
+  // Form
   const CreateFormOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
-
+  // 제목 onChange
+  const TitleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+  // 내용 onChange
+  const TextOnChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(event.target.value);
+  };
+  // 취소 onClick
   const CancelOnClick = () => {
     navigate("/");
+  };
+  // 완료 onClick
+  const CreateOnClick = () => {
+    const newDate = new Date();
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth() + 1;
+    const day = newDate.getDate();
+    const Hour = newDate.getHours();
+    const Minute = newDate.getMinutes();
+    // const date = `${year}/${month}/${day} ${Hour}:${Minute}`;
+    const date = `${year}/${month}/${day}`;
+
+    const newPost: any = {
+      id: uuidv4(),
+      title,
+      text,
+      date,
+    };
+
+    postMutation.mutate(newPost);
   };
   return (
     <Wrap>
       <PageTitle>CREATE TEXT</PageTitle>
       <CreateForm onSubmit={CreateFormOnSubmit}>
         <TextTitle>제목</TextTitle>
-        <TitleInput />
+        <TitleInput onChange={TitleOnChange} />
         <TextTitle>내용</TextTitle>
-        <TextInput />
+        <TextTextarea onChange={TextOnChange} />
 
         <ButtonDiv>
           <Cancel onClick={CancelOnClick}>취소</Cancel>
-          <Create>완료</Create>
+          <Create onClick={CreateOnClick}>완료</Create>
         </ButtonDiv>
       </CreateForm>
     </Wrap>
@@ -54,7 +102,7 @@ const TitleInput = styled.input`
   text-indent: 7px;
   font-size: 17px;
 `;
-const TextInput = styled.textarea`
+const TextTextarea = styled.textarea`
   width: 100%;
   height: 500px;
   resize: none;
