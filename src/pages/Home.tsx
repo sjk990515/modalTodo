@@ -1,9 +1,31 @@
+import axios from "axios";
 import React from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Todos } from "../components/Post";
+import TodoBox from "../components/TodoBox";
 
 function Home() {
   const navigate = useNavigate();
+
+  //DB에서 todo get
+  const getTodos = async () => {
+    const response = await axios.get("http://localhost:3001/todo");
+    return response;
+  };
+  const { isLoading, isError, data, error } = useQuery(
+    "friendsearch",
+    getTodos
+  );
+  if (isLoading) {
+    return <p>로딩중</p>;
+  }
+  if (isError) {
+    console.log("오류내용", error);
+    return <p>오류</p>;
+  }
+  const todo = data?.data.slice().reverse();
 
   // 게시글 작성 페이지로 이동
   const createPost = () => {
@@ -14,19 +36,9 @@ function Home() {
     <Wrap>
       <TitleH2>TODO LIST</TitleH2>
       <NameP>신정근</NameP>
-
-      <Contents>
-        <p>안녕안녕</p>
-        <p>2023.03.30</p>
-      </Contents>
-      <Contents>
-        <p>안녕안녕</p>
-        <p>2023.03.30</p>
-      </Contents>
-      <Contents>
-        <p>안녕안녕</p>
-        <p>2023.03.30</p>
-      </Contents>
+      {todo.map((item: Todos) => {
+        return <TodoBox key={item.id} item={item} />;
+      })}
 
       {/* 게시글 작성 페이지로 이동 */}
       <Create onClick={createPost}>+</Create>
@@ -51,25 +63,6 @@ const NameP = styled.p`
   margin-top: 5px;
   color: #727272;
   font-weight: 400;
-`;
-const Contents = styled.div`
-  margin: 20px auto 0 auto;
-  width: 100%;
-  height: 50px;
-  background-color: #fff;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 1px 3px 5px 0px #ccc;
-  transition: 0.5s;
-  cursor: pointer;
-  &:hover {
-    background-color: #ccc;
-  }
-  p {
-    margin: 0 15px;
-  }
 `;
 const Create = styled.p`
   position: fixed;

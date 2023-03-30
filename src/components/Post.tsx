@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 
+// todo type지정
+export interface Todos {
+  id: string;
+  title: string;
+  text: string;
+  date: string;
+}
+
 function Post() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -15,7 +23,7 @@ function Post() {
   const [text, setText] = useState<string>("");
   // post
   const postMutation = useMutation(
-    (newPost) => axios.post("http://localhost:3001/todo", newPost),
+    (newPost: Todos) => axios.post("http://localhost:3001/todo", newPost),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("todo");
@@ -46,28 +54,40 @@ function Post() {
     const year = newDate.getFullYear();
     const month = newDate.getMonth() + 1;
     const day = newDate.getDate();
-    const Hour = newDate.getHours();
-    const Minute = newDate.getMinutes();
-    // const date = `${year}/${month}/${day} ${Hour}:${Minute}`;
-    const date = `${year}/${month}/${day}`;
+    // const Hour = newDate.getHours();
+    // const Minute = newDate.getMinutes();
+    // // const date = `${year}/${month}/${day} ${Hour}:${Minute}`;
+    const date = `${year}.${month}.${day}`;
 
-    const newPost: any = {
+    const newPost: Todos = {
       id: uuidv4(),
       title,
       text,
       date,
     };
-
-    postMutation.mutate(newPost);
+    // 제목, 내용 빈칸 예외처리
+    if (title.trim() === "" || text.trim() === "") {
+      alert("제목, 내용을 모두 입력하세요.");
+    } else {
+      postMutation.mutate(newPost);
+    }
   };
   return (
     <Wrap>
       <PageTitle>CREATE TEXT</PageTitle>
       <CreateForm onSubmit={CreateFormOnSubmit}>
         <TextTitle>제목</TextTitle>
-        <TitleInput onChange={TitleOnChange} />
+        <TitleInput
+          onChange={TitleOnChange}
+          maxLength={50}
+          placeholder="제목을 입력하세요."
+        />
         <TextTitle>내용</TextTitle>
-        <TextTextarea onChange={TextOnChange} />
+        <TextTextarea
+          onChange={TextOnChange}
+          maxLength={1000}
+          placeholder="내용을 입력하세요."
+        />
 
         <ButtonDiv>
           <Cancel onClick={CancelOnClick}>취소</Cancel>
