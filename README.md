@@ -1,5 +1,6 @@
 # 반응형 투두리스트 실행방법
 ### 1. 다운로드하신 후 파일로 들어가 터미널을 연 후 npm i 로 필요한 파일을 설치해 줍니다.
+(사용 기술 : react, typescript, react-query, axios, json-server, styled-components, react-router-dom, styled-reset, uuid)
 ### 2. 파일 안에 터미널을 추가로 한 개 더 연 후 하나는 npm start 나머지 하나는 npx json-server —watch db.json —port 3001로 서버와 웹을 모두 열어줍니다.
 ### 3. 그리고 크롬 등 웹에서 http://localhost:3000/ 으로 실행하시면 사용하실 수 있습니다.
 
